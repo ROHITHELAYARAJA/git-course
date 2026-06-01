@@ -1,2 +1,4 @@
 get the user data from the user 
 add the user data to the database
+
+hii we need to acces the database

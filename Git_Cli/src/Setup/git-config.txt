@@ -1,0 +1,73 @@
+================================================================
+  COMMAND: git config
+================================================================
+
+WHAT IS IT?
+-----------
+  Before you start using Git, you need to tell Git WHO YOU ARE.
+  Git needs your name and email so it can label every change
+  (commit) you make with your identity.
+
+  Think of it like signing your name before handing in an assignment.
+
+SYNTAX:
+-------
+  git config --global user.name  "Your Name"
+  git config --global user.email "you@example.com"
+  git config --list                          ← shows all settings
+
+EXAMPLE:
+--------
+  $ git config --global user.name  "Rohith"
+  $ git config --global user.email "rohith@example.com"
+  $ git config --list
+
+EXPECTED OUTPUT (from --list):
+-------------------------------
+  user.name=Rohith
+  user.email=rohith@example.com
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  --global saves settings to a file called  ~/.gitconfig
+  (a hidden file in your home folder).
+
+  Without --global, settings only apply to ONE repo.
+
+  [ You type config ] --> Git writes to ~/.gitconfig file
+                          (your home folder)
+
+DIAGRAM — Where settings are stored:
+--------------------------------------
+  /home/yourname/
+  └── .gitconfig        ← global config lives here
+       user.name = Rohith
+       user.email = rohith@example.com
+
+  /your-project/.git/
+  └── config            ← local (project-only) config lives here
+
+WHEN TO USE:
+------------
+  ✅ The very FIRST TIME you install Git — do this before anything else!
+  ✅ When switching computers.
+  ✅ When you want to check your current settings.
+
+COMMON MISTAKES:
+----------------
+  ❌  Forgetting to set name/email → your commits will be blank/anonymous
+  ❌  Forgetting --global → settings only apply to current repo
+  ❌  Typos in email → keep it same as your GitHub account email!
+
+RELATED COMMANDS:
+-----------------
+  git --version    → Check Git is installed first
+  git init         → Create a new repo (next step!)
+
+INTERVIEW QUESTION:
+-------------------
+  Q: Where does `git config --global` save your settings?
+  A: In the ~/.gitconfig file in your home directory. Without --global,
+     settings go into .git/config inside the specific project folder.
+
+================================================================

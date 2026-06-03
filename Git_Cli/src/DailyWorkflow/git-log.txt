@@ -1,0 +1,95 @@
+================================================================
+  COMMAND: git log
+================================================================
+
+WHAT IS IT?
+-----------
+  `git log` shows you the history of all commits in your repo.
+  Every save (commit) you've made is listed here, newest first.
+
+  Think of it like: looking at your browsing history, but for
+  your project's changes.
+
+SYNTAX:
+-------
+  git log                    ← full detailed view
+  git log --oneline          ← compact one-line view (most useful!)
+  git log --oneline -5       ← show only last 5 commits
+
+EXAMPLE:
+--------
+  $ git log --oneline
+
+EXPECTED OUTPUT:
+----------------
+  Full git log:
+  ─────────────────────────────────────────────────────
+  commit f3a2c1b7d9e4f1a2b3c4d5e6f7a8b9c0d1e2f3a4
+  Author: Rohith <rohith@example.com>
+  Date:   Wed Jun 3 10:30:00 2026 +0530
+
+      Add login button to homepage
+
+  commit def56789abc123...
+  Author: Rohith <rohith@example.com>
+  Date:   Tue Jun 2 09:15:00 2026 +0530
+
+      Fix null pointer error
+
+  ─────────────────────────────────────────────────────
+
+  git log --oneline (easier to read!):
+  ─────────────────────────────────────────────────────
+  f3a2c1b Add login button to homepage
+  def5678 Fix null pointer error
+  abc1234 Initial commit
+  ─────────────────────────────────────────────────────
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git reads the chain of commits stored in .git/ and prints them.
+  Commits are linked like a chain — newest to oldest.
+
+DIAGRAM — Commit History:
+---------------------------
+
+  Oldest                                                    Newest
+  ──────────────────────────────────────────────────────────────
+  ┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
+  │ abc1234  │────►│ def5678  │────►│ f3a2c1b  │────►│ HEAD     │
+  │ "Init"   │     │ "Fix bug"│     │ "Add btn"│     │ (latest) │
+  └──────────┘     └──────────┘     └──────────┘     └──────────┘
+
+  git log reads this chain and prints it (newest first).
+
+USEFUL VARIATIONS:
+------------------
+  git log --oneline          → compact list
+  git log --oneline -5       → last 5 commits only
+  git log --oneline --graph  → shows branching visually
+
+WHEN TO USE:
+------------
+  ✅ To review your recent changes.
+  ✅ To find a commit ID before reverting or cherry-picking.
+  ✅ To check what your teammates committed.
+
+COMMON MISTAKES:
+----------------
+  ❌  Forgetting --oneline → default view is very verbose
+  ❌  Press Q to exit the log view (it opens in a pager)
+  ❌  Using git log outside a git repo → error!
+
+RELATED COMMANDS:
+-----------------
+  git status      → See current state (not history)
+  git show <hash> → See details of one specific commit
+  git diff        → See exact line-by-line changes
+
+INTERVIEW QUESTION:
+-------------------
+  Q: How do you view a short, easy-to-read commit history?
+  A: Use `git log --oneline`. It shows each commit as one line
+     with the short hash and message, like "f3a2c1b Add feature".
+
+================================================================

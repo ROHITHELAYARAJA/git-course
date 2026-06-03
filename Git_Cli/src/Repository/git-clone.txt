@@ -1,0 +1,76 @@
+================================================================
+  COMMAND: git clone
+================================================================
+
+WHAT IS IT?
+-----------
+  `git clone` downloads a copy of an existing repository
+  from the internet (like GitHub) to your computer.
+
+  Think of it like: "Give me a full copy of that project!"
+  You get ALL the files AND the full history of changes.
+
+SYNTAX:
+-------
+  git clone <URL>
+  git clone <URL> my-folder-name     ← save into a specific folder name
+
+EXAMPLE:
+--------
+  $ git clone https://github.com/torvalds/linux.git
+
+  Or a simpler project:
+  $ git clone https://github.com/your-username/hello-world.git
+
+EXPECTED OUTPUT:
+----------------
+  Cloning into 'hello-world'...
+  remote: Enumerating objects: 10, done.
+  remote: Counting objects: 100% (10/10), done.
+  Receiving objects: 100% (10/10), done.
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  1. Git contacts the remote server (GitHub).
+  2. Downloads ALL commits, files, and branches.
+  3. Creates a new folder on your computer with everything inside.
+  4. Sets up "origin" — a link pointing back to GitHub.
+
+DIAGRAM:
+---------
+  GitHub (Remote)                     Your Computer (Local)
+  ─────────────────                   ──────────────────────
+  hello-world/                        (nothing yet)
+  ├── README.md          clone
+  ├── index.js        ──────────►     hello-world/
+  └── .git/                           ├── README.md
+      (full history)                  ├── index.js
+                                      └── .git/  (full copy!)
+
+  Remote Repo ──(git clone)──> New local folder with .git/
+
+WHEN TO USE:
+------------
+  ✅ You want to work on someone else's project.
+  ✅ You created a repo on GitHub and want it on your computer.
+  ✅ You're starting by copying a template or starter project.
+
+COMMON MISTAKES:
+----------------
+  ❌  Wrong URL → copy it directly from GitHub's green "Code" button
+  ❌  Cloning inside another git repo folder (check with git status first)
+  ❌  Running git init after cloning — NOT needed! Clone already sets up Git.
+
+RELATED COMMANDS:
+-----------------
+  git init      → Start a repo from scratch (alternative approach)
+  git remote    → See where your repo is connected to
+  git pull      → Download new changes after you've already cloned
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What does `git clone` set up after downloading a repo?
+  A: It creates a local folder with all files, full history (.git/), and
+     sets up "origin" — a remote link pointing back to the source repo.
+
+================================================================

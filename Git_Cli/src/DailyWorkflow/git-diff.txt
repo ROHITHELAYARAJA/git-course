@@ -1,0 +1,89 @@
+================================================================
+  COMMAND: git diff
+================================================================
+
+WHAT IS IT?
+-----------
+  `git diff` shows you the EXACT lines that changed in your files.
+  It's like a "spot the difference" game between two versions.
+
+  Lines with  +  (green) = added
+  Lines with  -  (red)   = removed
+
+SYNTAX:
+-------
+  git diff                    ← changes NOT yet staged
+  git diff --staged           ← changes that ARE staged (ready to commit)
+  git diff HEAD~1 HEAD        ← compare last commit vs the one before it
+
+EXAMPLE:
+--------
+  $ git diff
+
+EXPECTED OUTPUT:
+----------------
+  diff --git a/hello.txt b/hello.txt
+  index 08fe272..b10fc24 100644
+  --- a/hello.txt
+  +++ b/hello.txt
+  @@ -1,3 +1,4 @@
+   Hello, world!
+  -This is version 1.
+  +This is version 2.
+  +New line added here!
+
+  Reading the output:
+  ┌────────────────────────────────────────────────┐
+  │  --- a/hello.txt   → the OLD version           │
+  │  +++ b/hello.txt   → the NEW version           │
+  │  - This is version 1.   → REMOVED line         │
+  │  + This is version 2.   → ADDED line           │
+  │  + New line added here! → ADDED line           │
+  └────────────────────────────────────────────────┘
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git compares two versions of a file line by line
+  and shows what's different.
+
+DIAGRAM — What git diff compares:
+-----------------------------------
+
+  ┌─────────────────────┐      ┌─────────────────────┐
+  │ Working Directory   │      │  Staging Area       │
+  │  (your file now)   │      │  (what you added)   │
+  └─────────────────────┘      └─────────────────────┘
+          │                            │
+          │◄── git diff ──────────────►│  (unstaged changes)
+          │
+          │◄── git diff --staged ─────►│ HEAD (last commit)
+          │                            (staged changes)
+
+  git diff           = Working Dir vs Staging Area
+  git diff --staged  = Staging Area vs Last Commit (HEAD)
+
+WHEN TO USE:
+------------
+  ✅ Before git add → see what you changed
+  ✅ After git add → use --staged to confirm what's going into commit
+  ✅ To review changes before pushing to GitHub
+
+COMMON MISTAKES:
+----------------
+  ❌  `git diff` after staging → shows nothing! Use `git diff --staged`
+  ❌  Confusing + and - lines → + is ADDED, - is REMOVED
+  ❌  Skipping this step → you may commit things you didn't mean to
+
+RELATED COMMANDS:
+-----------------
+  git status          → Summary of what changed (no line details)
+  git add             → Stage the changes after reviewing
+  git log             → See commit history
+
+INTERVIEW QUESTION:
+-------------------
+  Q: How do you see only the changes that are staged for commit?
+  A: Use `git diff --staged` (or `git diff --cached`). This compares
+     the staging area against the last commit (HEAD).
+
+================================================================

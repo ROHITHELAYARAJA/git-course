@@ -1,0 +1,111 @@
+================================================================
+  COMMAND: git restore
+================================================================
+
+WHAT IS IT?
+-----------
+  `git restore` helps you UNDO changes. It has two main uses:
+
+  1. Undo changes in your Working Directory (discard edits)
+  2. Unstage files from the Staging Area (undo a git add)
+
+  Think of it like: CTRL+Z but for Git files.
+
+SYNTAX:
+-------
+  git restore filename.txt          ← discard changes in working dir
+  git restore --staged filename.txt ← unstage a file (undo git add)
+  git restore .                     ← discard ALL changes in working dir
+
+EXAMPLE:
+--------
+  ── Scenario 1: You edited a file and want to undo it ──
+  $ git restore hello.txt
+
+  ── Scenario 2: You ran git add but changed your mind ──
+  $ git restore --staged hello.txt
+
+EXPECTED OUTPUT:
+----------------
+  (no output = success!)
+  Use `git status` afterwards to confirm.
+
+⚠️  WARNING:
+-------------
+  `git restore filename` (without --staged) PERMANENTLY discards
+  your unsaved changes. There is NO undo for this!
+  Only run it if you are SURE you want to throw away your edits.
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  WITHOUT --staged:  Replaces the working dir file with the version
+                     stored in the last commit (HEAD).
+
+  WITH --staged:     Moves the file OUT of the staging area back to
+                     "modified but unstaged" state. Your edits are safe.
+
+DIAGRAM — git restore (discard working dir changes):
+------------------------------------------------------
+
+  BEFORE:
+  ┌─────────────────────┐       ┌─────────────────────┐
+  │ Working Directory   │       │  Repository (HEAD)  │
+  │  hello.txt          │       │  hello.txt          │
+  │  (you edited it!)   │       │  (original version) │
+  └─────────────────────┘       └─────────────────────┘
+           │
+           │  git restore hello.txt
+           ▼
+  AFTER:
+  ┌─────────────────────┐       ┌─────────────────────┐
+  │ Working Directory   │       │  Repository (HEAD)  │
+  │  hello.txt          │◄──────│  hello.txt          │
+  │  (back to original!)│  copy │  (original version) │
+  └─────────────────────┘       └─────────────────────┘
+
+
+DIAGRAM — git restore --staged (unstage a file):
+--------------------------------------------------
+
+  BEFORE:
+  Working Dir          Staging Area          Repository
+  hello.txt  ─────►   hello.txt (staged)    (last commit)
+                             │
+  AFTER git restore --staged hello.txt:
+  hello.txt ◄──────   (removed from staging) (unchanged)
+  (still has your edits, just no longer staged)
+
+COMPARISON TABLE:
+-----------------
+  Command                          What it does
+  ──────────────────────────────────────────────────────────
+  git restore file.txt             Undo edits (⚠️ permanent!)
+  git restore --staged file.txt    Unstage (edits still safe)
+  git restore .                    Undo ALL working dir changes
+
+WHEN TO USE:
+------------
+  ✅ You made a mistake and want to go back to the last commit.
+  ✅ You ran git add by mistake — use --staged to unstage.
+  ✅ You want to start over on a file.
+
+COMMON MISTAKES:
+----------------
+  ❌  Running git restore (no --staged) thinking your edits are safe → they're NOT
+  ❌  Not checking git status before → you may not know what's staged
+  ❌  Confusing restore with revert (revert creates a new commit; restore just fixes files)
+
+RELATED COMMANDS:
+-----------------
+  git status          → Check file states first
+  git diff            → Review changes before discarding
+  git revert          → Safely undo a commit (doesn't destroy history)
+
+INTERVIEW QUESTION:
+-------------------
+  Q: How is `git restore` different from `git reset` and `git revert`?
+  A: git restore only affects files (working dir or staging area) — it
+     doesn't touch commit history. git reset moves the branch pointer.
+     git revert creates a new commit to undo a past commit.
+
+================================================================

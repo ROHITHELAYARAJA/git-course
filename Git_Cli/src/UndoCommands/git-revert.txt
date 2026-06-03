@@ -1,0 +1,102 @@
+================================================================
+  COMMAND: git revert
+================================================================
+
+WHAT IS IT?
+-----------
+  `git revert` safely undoes a commit by creating a NEW commit
+  that does the opposite of the old one.
+
+  Think of it like: "I made a mistake in commit #5. Instead of
+  erasing it, I'll create commit #6 that cancels it out."
+
+  ✅ SAFE to use — history is NEVER erased.
+  ✅ Best choice when you've already pushed to GitHub.
+
+SYNTAX:
+-------
+  git revert <commit-hash>     ← revert a specific commit
+  git revert HEAD              ← revert the most recent commit
+
+EXAMPLE:
+--------
+  First, find the commit hash:
+  $ git log --oneline
+  f3a2c1b Add broken feature    ← this one was a mistake!
+  def5678 Fix login bug
+  abc1234 Initial commit
+
+  Now revert it:
+  $ git revert f3a2c1b
+
+EXPECTED OUTPUT:
+----------------
+  [main 9b2c3d4] Revert "Add broken feature"
+   1 file changed, 2 deletions(-)
+
+  (An editor may open for you to write/confirm the message. Press :wq to save in vim, or just close it.)
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  1. Git looks at what commit f3a2c1b changed.
+  2. Git applies the OPPOSITE changes (adds back removed lines,
+     removes added lines).
+  3. Git creates a new commit with those opposite changes.
+  4. Your history now has BOTH the original mistake AND the fix.
+
+DIAGRAM — Before and After git revert:
+-----------------------------------------
+
+  BEFORE (something went wrong in commit 3):
+  ─────────────────────────────────────────
+  Commit 1     Commit 2     Commit 3
+  ┌────────┐   ┌────────┐   ┌────────┐
+  │ abc123 │──►│ def456 │──►│ f3a2c1 │ ◄── HEAD
+  │ "Init" │   │ "Fix"  │   │ "Bug!" │
+  └────────┘   └────────┘   └────────┘
+
+  AFTER git revert f3a2c1:
+  ─────────────────────────────────────────
+  Commit 1     Commit 2     Commit 3     Commit 4 (new!)
+  ┌────────┐   ┌────────┐   ┌────────┐   ┌────────────────┐
+  │ abc123 │──►│ def456 │──►│ f3a2c1 │──►│ 9b2c3d4        │ ◄── HEAD
+  │ "Init" │   │ "Fix"  │   │ "Bug!" │   │ "Revert Bug!"  │
+  └────────┘   └────────┘   └────────┘   └────────────────┘
+                                          ↑
+                              The original "Bug!" commit still exists,
+                              but Commit 4 cancels out its changes.
+
+REVERT vs RESET — KEY DIFFERENCE:
+------------------------------------
+  git revert   → Adds a NEW commit to undo changes. History preserved. ✅ Safe for teams.
+  git reset    → Moves back in time, erasing commits. ⚠️ Dangerous for shared branches.
+
+  Rule: If you've pushed to GitHub → use git revert
+        If it's only local and you haven't pushed → git reset may be okay
+
+WHEN TO USE:
+------------
+  ✅ You pushed a commit to GitHub and it caused a bug.
+  ✅ You want to undo a change without erasing history.
+  ✅ Working in a team (never erase shared history!).
+
+COMMON MISTAKES:
+----------------
+  ❌  Forgetting the commit hash → run `git log --oneline` first
+  ❌  Using git reset instead on pushed code → confuses teammates
+  ❌  Reverting a merge commit without `-m` flag → will fail
+
+RELATED COMMANDS:
+-----------------
+  git log --oneline    → Find the commit hash to revert
+  git restore          → Undo file changes (not commits)
+  git reset            → Undo commits locally (risky if pushed)
+
+INTERVIEW QUESTION:
+-------------------
+  Q: Why use `git revert` instead of `git reset`?
+  A: git revert preserves history by adding a new "undo commit".
+     It's safe for shared branches. git reset rewrites history,
+     which can cause problems for teammates who have already pulled.
+
+================================================================

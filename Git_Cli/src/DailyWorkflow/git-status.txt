@@ -1,0 +1,90 @@
+================================================================
+  COMMAND: git status
+================================================================
+
+WHAT IS IT?
+-----------
+  `git status` is your best friend. It tells you:
+   → What files have you changed?
+   → What files are ready to be saved (staged)?
+   → What files is Git not tracking yet?
+
+  Think of it like a "What's happening right now?" report.
+  Run it constantly — there's no harm in running it too much!
+
+SYNTAX:
+-------
+  git status
+
+EXAMPLE:
+--------
+  $ git status
+
+EXPECTED OUTPUT (different scenarios):
+---------------------------------------
+  ── SCENARIO 1: Nothing changed ──
+  On branch main
+  nothing to commit, working tree clean
+
+  ── SCENARIO 2: You modified a file ──
+  On branch main
+  Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+          modified:   index.js
+
+  ── SCENARIO 3: File is staged (ready to commit) ──
+  On branch main
+  Changes to be committed:
+    (use "git restore --staged <file>..." to unstage)
+          modified:   index.js
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git compares THREE areas:
+
+  1. Working Directory  → files on your computer right now
+  2. Staging Area       → files marked "ready to save"
+  3. Repository (HEAD)  → the last saved snapshot (commit)
+
+DIAGRAM — Git's 3 Areas:
+--------------------------
+
+  ┌───────────────────┐    git add     ┌───────────────────┐    git commit    ┌───────────────────┐
+  │                   │  ──────────►   │                   │  ──────────────► │                   │
+  │  Working          │                │  Staging Area     │                  │  Repository       │
+  │  Directory        │                │  (Index)          │                  │  (History)        │
+  │                   │  ◄──────────   │                   │                  │                   │
+  │  (your files)     │  git restore   │  (ready-to-save)  │                  │  (saved commits)  │
+  └───────────────────┘                └───────────────────┘                  └───────────────────┘
+           ▲                                                                            │
+           └────────────────────────────────────────────────────────────────────────────┘
+                                         git restore (from history)
+
+  git status shows you where your files sit between these 3 areas.
+
+WHEN TO USE:
+------------
+  ✅ Before doing ANYTHING — it's a safe "check" command.
+  ✅ After modifying files — to see what changed.
+  ✅ Before committing — confirm the right files are staged.
+  ✅ After git add — confirm files moved to staging area.
+
+COMMON MISTAKES:
+----------------
+  ❌  Skipping git status → you lose track of what's staged
+  ❌  Misreading "not staged" vs "staged" → read the output carefully
+  ❌  Thinking git status changes something → it only READS, never modifies!
+
+RELATED COMMANDS:
+-----------------
+  git add      → Move files from Working Dir → Staging Area
+  git commit   → Save staged files into the Repository
+  git diff     → See EXACTLY what lines changed
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What does `git status` tell you?
+  A: It shows which files are modified (unstaged), which are ready to commit
+     (staged), and which are brand new and not tracked by Git yet.
+
+================================================================

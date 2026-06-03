@@ -1,0 +1,108 @@
+================================================================
+  COMMAND: git reset
+================================================================
+
+WHAT IS IT?
+-----------
+  `git reset` moves your branch pointer backward in history —
+  essentially "un-committing" commits.
+
+  ⚠️  CAUTION: This rewrites history. Only use on commits you
+  have NOT pushed to GitHub yet!
+
+  For beginners: git revert is usually safer. Learn reset after
+  you're comfortable with the basics.
+
+SYNTAX:
+-------
+  git reset --soft HEAD~1    ← undo last commit, KEEP changes staged
+  git reset HEAD~1           ← undo last commit, keep changes (unstaged)
+  git reset --hard HEAD~1    ← undo last commit, DELETE changes ⚠️
+
+  HEAD~1 means "one commit before current"
+  HEAD~2 means "two commits before current"
+
+EXAMPLE:
+--------
+  $ git reset HEAD~1    ← most beginner-friendly option
+
+EXPECTED OUTPUT:
+----------------
+  Unstaged changes after reset:
+  M    hello.txt
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git moves the branch pointer (HEAD) back to an earlier commit.
+  What happens to your files depends on the mode:
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  Mode          │ Commit Undone? │ Staged? │ Working Dir?        │
+  │  ─────────────────────────────────────────────────────────────  │
+  │  --soft        │     YES        │  YES    │  Unchanged          │
+  │  --mixed       │     YES        │   NO    │  Unchanged (default)│
+  │  --hard        │     YES        │   NO    │  DELETED ⚠️         │
+  └─────────────────────────────────────────────────────────────────┘
+
+DIAGRAM — git reset HEAD~1 (default / --mixed):
+-------------------------------------------------
+
+  BEFORE:
+  ┌──────────┐     ┌──────────┐     ┌──────────┐
+  │ abc1234  │────►│ def5678  │────►│ f3a2c1b  │◄── HEAD (main)
+  │ "Init"   │     │ "Fix"    │     │ "Oops!"  │
+  └──────────┘     └──────────┘     └──────────┘
+
+  AFTER git reset HEAD~1:
+  ┌──────────┐     ┌──────────┐
+  │ abc1234  │────►│ def5678  │◄── HEAD (main)    f3a2c1b is gone!
+  │ "Init"   │     │ "Fix"    │
+  └──────────┘     └──────────┘
+
+  Your file changes from f3a2c1b still exist in Working Dir,
+  just not committed anymore. You can re-add and re-commit them.
+
+DIAGRAM — git reset --hard (dangerous!):
+------------------------------------------
+
+  BEFORE:
+  Working Dir has changes + commit exists.
+
+  AFTER git reset --hard HEAD~1:
+  Working Dir is wiped clean. Commit is gone.
+  ⚠️  No way to recover (unless you use git reflog)!
+
+RESET vs REVERT — Quick Cheat Sheet:
+---------------------------------------
+  Situation                           Use
+  ──────────────────────────────────────────────────
+  Undo a commit (not pushed yet)    → git reset
+  Undo a commit (already pushed)    → git revert
+  Just want to unstage a file       → git restore --staged
+
+WHEN TO USE:
+------------
+  ✅ You committed something by accident (locally, not pushed).
+  ✅ You want to combine multiple small commits into one.
+  ✅ You want to clean up history before pushing.
+
+COMMON MISTAKES:
+----------------
+  ❌  Using --hard without thinking → your file changes are GONE forever
+  ❌  Resetting pushed commits → other people will have problems!
+  ❌  Forgetting HEAD~1 → git reset with no args does almost nothing
+
+RELATED COMMANDS:
+-----------------
+  git revert        → Safer alternative for pushed commits
+  git restore       → Just fix files without touching commits
+  git reflog        → Emergency recovery if reset went wrong
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What is the difference between git reset --hard HEAD~1 and git revert HEAD?
+  A: git reset --hard moves the branch pointer back and discards the commit
+     (history rewritten). git revert creates a new commit that undoes the
+     changes, keeping the full history intact. Revert is safer for shared branches.
+
+================================================================

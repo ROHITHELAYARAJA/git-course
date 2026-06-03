@@ -1,0 +1,74 @@
+================================================================
+  COMMAND: git init
+================================================================
+
+WHAT IS IT?
+-----------
+  `git init` turns a regular folder on your computer into a
+  Git repository — a folder that Git can now track changes in.
+
+  Think of it like: "Hey Git, please start watching this folder!"
+
+SYNTAX:
+-------
+  git init                  ← inside your project folder
+  git init my-project       ← creates a NEW folder called my-project
+
+EXAMPLE:
+--------
+  $ mkdir my-first-project
+  $ cd my-first-project
+  $ git init
+
+EXPECTED OUTPUT:
+----------------
+  Initialized empty Git repository in /path/to/my-first-project/.git/
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git creates a hidden folder called  .git/  inside your project.
+  This folder is where Git stores ALL the history, configs,
+  and tracking information. You usually never touch it directly.
+
+DIAGRAM:
+---------
+  BEFORE git init:
+  ─────────────────────────────────
+  my-first-project/
+  └── (just a regular folder)
+
+  AFTER git init:
+  ─────────────────────────────────
+  my-first-project/
+  ├── .git/           ← Git's hidden folder (magic lives here!)
+  │   ├── HEAD        ← points to current branch
+  │   ├── objects/    ← stores all file snapshots
+  │   └── refs/       ← stores branch pointers
+  └── (your files go here)
+
+  [ Regular Folder ] ---(git init)---> [ Git Repository ]
+
+WHEN TO USE:
+------------
+  ✅ Starting a brand new project from scratch.
+  ✅ You already have files and want to start tracking them with Git.
+
+COMMON MISTAKES:
+----------------
+  ❌  Running git init in the wrong folder (always cd into your project first!)
+  ❌  Running git init twice in same folder (harmless but unnecessary)
+  ❌  Deleting the .git/ folder — this erases ALL your history!
+
+RELATED COMMANDS:
+-----------------
+  git clone    → Copy an EXISTING repo from the internet (no need for init)
+  git status   → Check what's happening in your repo
+  git add      → Start tracking files
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What does `git init` do to your folder?
+  A: It creates a hidden .git/ directory inside the folder, turning it
+     into a Git repository where Git can track all changes.
+
+================================================================

@@ -1,0 +1,117 @@
+================================================================
+  COMMAND: git commit
+================================================================
+
+WHAT IS IT?
+-----------
+  `git commit` permanently saves your staged changes into the
+  repository's history. Each commit is like a checkpoint —
+  a snapshot of your project at that moment in time.
+
+  Think of it like: hitting SAVE in a video game.
+  You can always come back to any checkpoint later!
+
+SYNTAX:
+-------
+  git commit -m "Your message here"      ← most common way
+  git commit                             ← opens a text editor for message
+
+EXAMPLE:
+--------
+  $ git commit -m "Add hello.txt with welcome message"
+
+EXPECTED OUTPUT:
+----------------
+  [main f3a2c1b] Add hello.txt with welcome message
+   1 file changed, 3 insertions(+)
+
+  Breaking down the output:
+  ┌────────────────────────────────────────────────────────────────┐
+  │ [main f3a2c1b] Add hello.txt with welcome message             │
+  │   │     │       └── your commit message                       │
+  │   │     └────────── short commit hash (unique ID)             │
+  │   └──────────────── branch name (main)                        │
+  └────────────────────────────────────────────────────────────────┘
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  1. Git takes the snapshot from the Staging Area.
+  2. Creates a new "commit object" with:
+     → Your name & email (from git config)
+     → Date and time
+     → Your message
+     → The file snapshot
+     → A pointer to the previous commit
+  3. The branch pointer (HEAD) moves to this new commit.
+
+DIAGRAM — Full Flow (Working Dir → Staging → Repository):
+-----------------------------------------------------------
+
+  Working Directory     Staging Area (Index)     Repository
+  ──────────────────    ────────────────────     ──────────────────
+  hello.txt (edited)
+         │
+         │  git add
+         ▼
+                        hello.txt (staged)
+                              │
+                              │  git commit -m "..."
+                              ▼
+                                                 Commit #1
+                                                 ┌──────────────┐
+                                                 │ ID: f3a2c1b  │
+                                                 │ Author: You  │
+                                                 │ Msg: "Add.." │
+                                                 │ hello.txt ✅ │
+                                                 └──────────────┘
+                                                       ▲
+                                                     HEAD (main)
+
+HOW COMMITS CHAIN TOGETHER:
+-----------------------------
+
+  Commit #1           Commit #2           Commit #3
+  ┌─────────┐         ┌─────────┐         ┌─────────┐
+  │ abc1234 │ ──────► │ def5678 │ ──────► │ f3a2c1b │ ◄─── HEAD
+  │ "First" │         │ "Fix"   │         │ "Add.." │
+  └─────────┘         └─────────┘         └─────────┘
+  (oldest)                                 (newest)
+
+WRITING GOOD COMMIT MESSAGES:
+-------------------------------
+  ✅ Good:  "Add login button to homepage"
+  ✅ Good:  "Fix null pointer error in UserService"
+  ✅ Good:  "Update README with setup instructions"
+
+  ❌ Bad:   "stuff"
+  ❌ Bad:   "changes"
+  ❌ Bad:   "asdfgh"
+
+  Rule: Write it like "This commit will ______" and fill the blank.
+
+WHEN TO USE:
+------------
+  ✅ After completing a small piece of work.
+  ✅ After fixing a bug.
+  ✅ After adding a new feature.
+  ✅ Commit often — small commits are better than huge ones!
+
+COMMON MISTAKES:
+----------------
+  ❌  No staged files → Git says "nothing to commit"
+  ❌  Bad/empty message → useless history, hard to understand later
+  ❌  Committing too rarely → huge commits are hard to understand
+
+RELATED COMMANDS:
+-----------------
+  git add      → Stage files first (required before commit)
+  git log      → View your commit history
+  git status   → Check what's staged before committing
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What does the output "[main abc1234] message" mean?
+  A: It shows the branch name (main), the unique commit hash (abc1234),
+     and your commit message. HEAD now points to this new commit.
+
+================================================================

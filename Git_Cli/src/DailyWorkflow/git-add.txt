@@ -1,0 +1,89 @@
+================================================================
+  COMMAND: git add
+================================================================
+
+WHAT IS IT?
+-----------
+  `git add` moves your changed files into the Staging Area —
+  the "ready to save" zone. It's like putting items into a
+  shopping cart before checking out.
+
+  Git does NOT automatically save every change you make.
+  YOU decide what goes into the next save (commit).
+  `git add` is how you select what to include.
+
+SYNTAX:
+-------
+  git add filename.txt         ← add ONE specific file
+  git add folder/              ← add all files inside a folder
+  git add .                    ← add ALL changed files at once
+  git add *.java               ← add all .java files
+
+EXAMPLE:
+--------
+  $ git add hello.txt
+
+  $ git add .             ← most commonly used
+
+EXPECTED OUTPUT:
+----------------
+  (no output = success!)
+  Use `git status` right after to confirm the file is staged.
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git takes a SNAPSHOT of your file's current content and
+  saves it to the "index" (staging area) inside .git/
+
+  Your file in the Working Directory → COPIED into Staging Area
+
+DIAGRAM — What git add does:
+------------------------------
+
+  Working Directory          Staging Area           Repository
+  ─────────────────          ────────────           ──────────
+  hello.txt  (changed) 
+       │
+       │   git add hello.txt
+       ▼
+  hello.txt ─────────────►  hello.txt (staged) ────► (after commit)
+
+  BEFORE git add:
+  ┌─────────────────┐         ┌─────────────────┐
+  │ hello.txt (NEW) │         │   (empty)       │
+  │ Working Dir     │         │  Staging Area   │
+  └─────────────────┘         └─────────────────┘
+
+  AFTER git add hello.txt:
+  ┌─────────────────┐         ┌─────────────────┐
+  │ hello.txt       │ ──────► │  hello.txt ✅   │
+  │ Working Dir     │  added  │  Staging Area   │
+  └─────────────────┘         └─────────────────┘
+
+WHEN TO USE:
+------------
+  ✅ After creating or editing files that you want to save.
+  ✅ Before every `git commit`.
+  ✅ Use `git add .` to quickly stage everything changed.
+  ✅ Use specific filenames when you only want SOME files committed.
+
+COMMON MISTAKES:
+----------------
+  ❌  Forgetting git add → your commit will be empty!
+  ❌  Using `git add .` without checking what changed first (run git status!)
+  ❌  Accidentally staging files you didn't mean to (use git restore --staged)
+
+RELATED COMMANDS:
+-----------------
+  git status           → See what's staged and what's not
+  git restore --staged → UNDO a git add (unstage a file)
+  git commit           → Save staged files permanently
+
+INTERVIEW QUESTION:
+-------------------
+  Q: What does `git add` do? How does it relate to commits?
+  A: It moves file changes into the staging area (index). Only staged
+     changes get included in the next `git commit`. It's the "select
+     what to save" step before actually saving.
+
+================================================================

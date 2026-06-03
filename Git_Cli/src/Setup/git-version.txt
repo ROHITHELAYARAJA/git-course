@@ -1,0 +1,54 @@
+================================================================
+  COMMAND: git --version
+================================================================
+
+WHAT IS IT?
+-----------
+  This command checks which version of Git is installed on your
+  computer. Think of it like asking "What version of the app do
+  I have installed?"
+
+SYNTAX:
+-------
+  git --version
+
+EXAMPLE:
+--------
+  $ git --version
+
+EXPECTED OUTPUT:
+----------------
+  git version 2.43.0
+
+  (Your number may look slightly different — that is totally fine!)
+
+WHAT HAPPENS INTERNALLY:
+-------------------------
+  Git simply reads its own program info and prints it.
+  No files are changed. No repository is needed.
+
+  [ Your Computer ] ---> asks Git --> Git prints its version number
+
+WHEN TO USE:
+------------
+  ✅ Right after installing Git, to confirm it worked.
+  ✅ When someone asks "which version are you on?"
+  ✅ Before starting any Git project.
+
+COMMON MISTAKES:
+----------------
+  ❌  Typing "git -version" (only one dash) — use TWO dashes: --version
+  ❌  Expecting this to work inside a folder — it works ANYWHERE.
+
+RELATED COMMANDS:
+-----------------
+  git --help       → Shows list of all available git commands
+  git config       → Set up your name and email (next step!)
+
+INTERVIEW QUESTION:
+-------------------
+  Q: How do you confirm Git is installed correctly?
+  A: Run `git --version`. If Git is installed, it prints the version
+     number like "git version 2.43.0".
+
+================================================================
